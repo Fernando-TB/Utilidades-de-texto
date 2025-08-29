@@ -18,7 +18,7 @@ public class UtilidadesTexto {
     }
 
     public static int leerOpcion(){
-        Scanner opcion = new Scanner();
+        Scanner opcion = new Scanner(System.in);
     }
 
 }
