@@ -1,15 +1,19 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class UtilidadesTexto {
-    public static void main(){
-
+    public static void main(String[] args) {
+        menu();
     }
 
     public static void menu(){
-        mostrarMenu();
-        Scanner opcion = new Scanner(System.in);
-        int seleccion = leerOpcion(opcion);
-        ejecutarOpcion(seleccion,opcion);
+        while (true) {
+            mostrarMenu();
+            Scanner opcion = new Scanner(System.in);
+            int seleccion = leerOpcion(opcion);
+            ejecutarOpcion(seleccion);
+        }
 
     }
     public static void mostrarMenu(){
@@ -25,21 +29,36 @@ public class UtilidadesTexto {
         return opcion.nextInt();
     }
 
-    public static void ejecutarOpcion(int opcion,Scanner lector){
+    public static void ejecutarOpcion(int opcion){
         switch (opcion) {
-            case 1 -> solicitarFrase(lector);
+            case 1 -> revesDerecho();
+            case 2 -> cuantasVocales();
+            case 3 -> encriptarTexto();
+            case 4 -> desencriptarTexto();
+            case 5 -> System.exit(0);
         }
     }
 
-    public static String solicitarFrase(Scanner frase){
+    public static String solicitarFrase(){
         System.out.println("Indique su frase: ");
-        return frase.nextLine();
+        Scanner leer = new Scanner(System.in);
+        String frase = leer.nextLine();
+        return frase;
+
     }
 
-    public static boolean verificarPalindromo(Scanner leer){
-        String frase = solicitarFrase(leer);
-        String fraseJunta = frase.replaceAll("\\s+","");
-        String fraseInvertida = invertirFrase(frase);
+    public static void revesDerecho() {
+        if (verificarPalindromo()) {
+            System.out.println("La frase es Reves-Derecho osea un palindromo.");
+        }else{
+            System.out.println("La frase no es Reves-Derecho.");
+        }
+    }
+
+    public static boolean verificarPalindromo(){
+        String frase = solicitarFrase();
+        String fraseJunta = frase.replaceAll("\\s+","").toLowerCase();
+        String fraseInvertida = invertirFrase(fraseJunta);
         if (fraseJunta.equals(fraseInvertida)){
             return true;
         }else {
@@ -52,5 +71,41 @@ public class UtilidadesTexto {
         StringBuilder inversion = new StringBuilder(frase);
         String fraseInvertida = inversion.reverse().toString();
         return fraseInvertida;
+    }
+
+    public static void cuantasVocales(){
+        String frase = solicitarFrase().toLowerCase().replaceAll("\\s+","");
+        Character[] listaVocales = {'a','e','i','o','u'};
+        List<Character> vocales = new ArrayList<>(List.of(listaVocales));
+        int contador = 0;
+        for (int i= 0 ; i < frase.length(); i++){
+            char letra = frase.charAt(i);
+            if (vocales.contains(letra)){
+                contador++;
+            }
+        }
+        System.out.println("La frase contiene " + contador + " vocales.");
+    }
+
+    public static void encriptarTexto(){
+        String frase = solicitarFrase().toLowerCase().replaceAll("\\s+","");
+        frase = frase
+                .replace('a','@')
+                .replace('e','&')
+                .replace('i','!')
+                .replace('o','*')
+                .replace('u','#');
+        System.out.println("Texto encriptado: "+ frase);
+    }
+
+    public static void desencriptarTexto(){
+        String frase = solicitarFrase().toLowerCase().replaceAll("\\s+","");
+        frase = frase
+                .replace('@','a')
+                .replace('&','e')
+                .replace('!','i')
+                .replace('*','o')
+                .replace('#','u');
+        System.out.println("Texto desencriptado: "+ frase);
     }
 }
