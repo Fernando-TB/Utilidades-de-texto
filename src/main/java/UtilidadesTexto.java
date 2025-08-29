@@ -36,11 +36,21 @@ public class UtilidadesTexto {
         return frase.nextLine();
     }
 
-    public static void verificarPalindromo(Scanner leer){
+    public static boolean verificarPalindromo(Scanner leer){
         String frase = solicitarFrase(leer);
-
-
+        String fraseJunta = frase.replaceAll("\\s+","");
+        String fraseInvertida = invertirFrase(frase);
+        if (fraseJunta.equals(fraseInvertida)){
+            return true;
+        }else {
+            return false;
+        }
     }
 
-
+    public static String invertirFrase(String fraseOriginal){
+        String frase = fraseOriginal.replaceAll("\\s+","");
+        StringBuilder inversion = new StringBuilder(frase);
+        String fraseInvertida = inversion.reverse().toString();
+        return fraseInvertida;
+    }
 }
